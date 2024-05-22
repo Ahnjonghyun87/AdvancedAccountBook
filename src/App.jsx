@@ -1,18 +1,15 @@
-import CalendarForm from "./components/CalendarForm";
-import RecentAccount from "./components/RecentAccount";
-import WriteForm from "./components/WriteForm";
-import GlobalStyles from "./globalStyles";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Detail from "./pages/Detail/Detail";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   return (
-    <>
-      <GlobalStyles />
-      <main>
-        <WriteForm />
-        <CalendarForm />
-        <RecentAccount />
-      </main>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

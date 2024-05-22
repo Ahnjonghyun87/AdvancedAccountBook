@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const RecentAccount = () => {
@@ -7,28 +8,36 @@ const RecentAccount = () => {
         <StBox>
           <StInnerBox>
             <StSpanDate>2024-02-02</StSpanDate>
-            <StSpanText>회식</StSpanText>
+            <Link to="/detail/dinner">
+              <StSpanText>회식</StSpanText>
+            </Link>
           </StInnerBox>
           <StSpanText>50000원</StSpanText>
         </StBox>
         <StBox>
           <StInnerBox>
             <StSpanDate>2024-02-02</StSpanDate>
-            <StSpanText>간식 - 아이스크림</StSpanText>
+            <Link to="/detail/icecream">
+              <StSpanText>간식 - 아이스크림</StSpanText>
+            </Link>
           </StInnerBox>
           <StSpanText>500원</StSpanText>
         </StBox>
         <StBox>
           <StInnerBox>
             <StSpanDate>2024-02-02</StSpanDate>
-            <StSpanText>여행 - 일본여행</StSpanText>
+            <Link to="/detail/japan">
+              <StSpanText>여행 - 일본여행</StSpanText>
+            </Link>
           </StInnerBox>
           <StSpanText>1,055,000원</StSpanText>
         </StBox>
         <StBox>
           <StInnerBox>
             <StSpanDate>2024-02-02</StSpanDate>
-            <StSpanText>미용 - 미용실</StSpanText>
+            <Link to="/detail/shop">
+              <StSpanText>미용 - 미용실</StSpanText>
+            </Link>
           </StInnerBox>
           <StSpanText>155,000원</StSpanText>
         </StBox>
