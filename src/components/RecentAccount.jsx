@@ -98,6 +98,10 @@ const StSpanText = styled.span`
   font-weight: bold;
   color: rgb(0, 123, 255);
   flex-shrink: 0;
+  max-width: 640px; /*맥스 위드 설정 해야 "..."표시되던데*/
+  white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 "..."으로 표시 */
 `;
 
 const StSpanDate = styled.span`

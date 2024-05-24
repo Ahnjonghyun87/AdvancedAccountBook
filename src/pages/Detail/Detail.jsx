@@ -17,7 +17,7 @@ const Detail = () => {
         <StInput
           type="text"
           id="item"
-          placeholder="지출항목"
+          placeholder="지출 항목"
           value="category"
         />
       </StSingleBox>
@@ -26,17 +26,17 @@ const Detail = () => {
         <StInput
           type="text"
           id="amount"
-          placeholder="지출금액"
+          placeholder="지출 금액"
           value="number"
         />
       </StSingleBox>
       <StSingleBox>
-        <StLabel>수정</StLabel>
+        <StLabel>내용</StLabel>
         <StInput
           type="text"
           id="description"
-          placeholder="지출금액"
-          value="place"
+          placeholder="지출 내용"
+          value=""
         />
       </StSingleBox>
       <StSingleBox>
