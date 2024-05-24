@@ -1,6 +1,37 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const WriteForm = () => {
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [expend, setExpend] = useState([]);
+
+  const onClick = () => {
+    if (
+      !date.trim() ||
+      !description.trim() ||
+      !amount.trim() ||
+      !expend.trim() ||
+      !item.trim()
+    ) {
+      alert("빈 칸을 채워주세요");
+      return;
+    }
+
+    const newExpend = { date, item, amount, description, expend };
+    setExpend([...expend, newExpend]);
+    /*여기까지 기존 todolist 보며 참고 했다가 중괄호 오탈자 수정해달라고 했는데
+    갑분 gpt가 입력필드 초기화가 필요하다가 다음 4개의 set을 추가함 */
+    setDate("");
+    setItem("");
+    setAmount("");
+    setDescription("");
+  };
+
+  /* onChange를 각 set들 마다 만들어서 const로 지정하고 input에 onChange(e)를 달아야 하는지?*/
+
   return (
     <StHeaderSection>
       <StInputBox>
@@ -20,7 +51,7 @@ const WriteForm = () => {
           <StLabel htmlFor="description">설명</StLabel>
           <StInput type="text" id="description" placeholder="설명" />
         </StInputGroup>
-        <StButton>저장</StButton>
+        <StButton onClick={() => onClick}>저장</StButton>
       </StInputBox>
     </StHeaderSection>
   );
