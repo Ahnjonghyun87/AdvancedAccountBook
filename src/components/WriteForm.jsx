@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { v4 as uuid } from "uuid";
 
 const WriteForm = () => {
   const [date, setDate] = useState("");
@@ -8,51 +9,90 @@ const WriteForm = () => {
   const [description, setDescription] = useState("");
   const [expend, setExpend] = useState([]);
 
+  /*const onChange들이 함수 내부에 있으면 안된다는 소리가 무슨 소린가 했는데
+    이걸로 삽질해서 겨우 다시 기억남 */
+  const onChangeDate = (e) => {
+    setDate(e.target.value);
+  };
+  const onChangeItem = (e) => {
+    setItem(e.target.value);
+  };
+
+  const onChangeAmount = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const onChangeDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
   const onClick = () => {
-    if (
-      !date.trim() ||
-      !description.trim() ||
-      !amount.trim() ||
-      !expend.trim() ||
-      !item.trim()
-    ) {
+    if (!date.trim() || !description.trim() || !amount.trim() || !item.trim()) {
       alert("빈 칸을 채워주세요");
       return;
     }
 
-    const newExpend = { date, item, amount, description, expend };
+    const newExpend = { date, item, amount, description, expend, id: uuid };
     setExpend([...expend, newExpend]);
-    /*여기까지 기존 todolist 보며 참고 했다가 중괄호 오탈자 수정해달라고 했는데
-    갑분 gpt가 입력필드 초기화가 필요하다가 다음 4개의 set을 추가함 */
-    setDate("");
-    setItem("");
-    setAmount("");
-    setDescription("");
   };
-
-  /* onChange를 각 set들 마다 만들어서 const로 지정하고 input에 onChange(e)를 달아야 하는지?*/
 
   return (
     <StHeaderSection>
       <StInputBox>
         <StInputGroup>
           <StLabel htmlFor="date">날짜</StLabel>
-          <StInput type="date" id="date" placeholder="YYYY-MM-DD" />
+          <StInput
+            type="date"
+            id="date"
+            placeholder="YYYY-MM-DD"
+            onChange={onChangeDate}
+            value={date}
+          />
         </StInputGroup>
         <StInputGroup>
           <StLabel htmlFor="item">항목</StLabel>
-          <StInput type="text" id="item" placeholder="지출 항목" />
+          <StInput
+            type="text"
+            id="item"
+            placeholder="지출 항목"
+            onChange={onChangeItem}
+            value={item}
+          />
         </StInputGroup>
         <StInputGroup>
           <StLabel htmlFor="amount">금액</StLabel>
-          <StInput type="number" id="amount" placeholder="지출 금액" />
+          <StInput
+            type="number"
+            id="amount"
+            placeholder="지출 금액"
+            onChange={onChangeAmount}
+            value={amount}
+          />
         </StInputGroup>
         <StInputGroup>
           <StLabel htmlFor="description">설명</StLabel>
-          <StInput type="text" id="description" placeholder="설명" />
+          <StInput
+            type="text"
+            id="description"
+            placeholder="설명"
+            onChange={onChangeDescription}
+            value={description}
+          />
         </StInputGroup>
-        <StButton onClick={() => onClick}>저장</StButton>
+        <StButton onClick={onClick}>저장</StButton>
       </StInputBox>
+      <div>
+        <ul className="newExpend">
+          {expend.map(({ date, item, amount, description }, index) => (
+            <li key={index} className="expend">
+              <div>{date}</div>
+              <div>{item}</div>
+              <div>{amount}</div>
+              <div>{description}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </StHeaderSection>
   );
 };
@@ -112,3 +152,13 @@ const StButton = styled.button`
 `;
 
 export default WriteForm;
+
+/* <ul className="newExpend">
+      {expend.map(([{date, item, amount, description, id:uuid}]) =>
+    return <li key={index} className="expend">
+    <div>{date}</div>
+    <div>{item}</div>
+    <div>{description}</div>
+    <div>{id}</div>
+    </li>)}
+    </ul> 이건 오류 난 코드*/
