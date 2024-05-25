@@ -1,21 +1,21 @@
 import { styled } from "styled-components";
 
-const CalendarForm = () => {
+const CalendarForm = ({ setSelectedMonth }) => {
   return (
     <StBodySection>
       <StBodyBox>
-        <StBodyButton>1월</StBodyButton>
-        <StBodyButton>2월</StBodyButton>
-        <StBodyButton>3월</StBodyButton>
-        <StBodyButton>4월</StBodyButton>
-        <StBodyButton>5월</StBodyButton>
-        <StBodyButton>6월</StBodyButton>
-        <StBodyButton>7월</StBodyButton>
-        <StBodyButton>8월</StBodyButton>
-        <StBodyButton>9월</StBodyButton>
-        <StBodyButton>10월</StBodyButton>
-        <StBodyButton>11월</StBodyButton>
-        <StBodyButton>12월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(1)}>1월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(2)}>2월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(3)}>3월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(4)}>4월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(5)}>5월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(6)}>6월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(7)}>7월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(8)}>8월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(9)}>9월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(10)}>10월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(11)}>11월</StBodyButton>
+        <StBodyButton onClick={() => setSelectedMonth(12)}>12월</StBodyButton>
       </StBodyBox>
     </StBodySection>
   );

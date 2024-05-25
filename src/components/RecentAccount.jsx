@@ -1,56 +1,25 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const RecentAccount = () => {
+const RecentAccount = ({ posts }) => {
   return (
     <StFooterSection>
       <StFooterBox>
-        <StBox>
-          <StInnerBox>
-            <StSpanDate>2024-02-02</StSpanDate>
-            <Link to="/detail/dinner">
-              <StSpanText>회식</StSpanText>
-            </Link>
-          </StInnerBox>
-          <StSpanText>50000원</StSpanText>
-        </StBox>
-        <StBox>
-          <StInnerBox>
-            <StSpanDate>2024-02-02</StSpanDate>
-            <Link to="/detail/icecream">
-              <StSpanText>간식 - 아이스크림</StSpanText>
-            </Link>
-          </StInnerBox>
-          <StSpanText>500원</StSpanText>
-        </StBox>
-        <StBox>
-          <StInnerBox>
-            <StSpanDate>2024-02-02</StSpanDate>
-            <Link to="/detail/japan">
-              <StSpanText>여행 - 일본여행</StSpanText>
-            </Link>
-          </StInnerBox>
-          <StSpanText>1,055,000원</StSpanText>
-        </StBox>
-        <StBox>
-          <StInnerBox>
-            <StSpanDate>2024-02-02</StSpanDate>
-            <Link to="/detail/shop">
-              <StSpanText>미용 - 미용실</StSpanText>
-            </Link>
-          </StInnerBox>
-          <StSpanText>155,000원</StSpanText>
-        </StBox>
-        <StBox>
-          <StInnerBox>
-            <StSpanDate>2024-02-02</StSpanDate>
-            <StSpanText>
-              도서 - 자율주행차량 운전주행모드 자동 전환용 인식률 90% 이상의
-              다중 센서 기반 운전자 상태 인식 및 상황 인식 원천 기술 개발
-            </StSpanText>
-          </StInnerBox>
-          <StSpanText>95,000원</StSpanText>
-        </StBox>
+        {posts.map(({ description, date, item, amount, id }) => {
+          return (
+            <StBox key={id}>
+              <StInnerBox>
+                <StSpanDate>{date}</StSpanDate>
+                <Link to="/detail/dinner">
+                  <StSpanText>
+                    {item} - {description}
+                  </StSpanText>
+                </Link>
+              </StInnerBox>
+              <StSpanText>{amount}원</StSpanText>
+            </StBox>
+          );
+        })}
       </StFooterBox>
     </StFooterSection>
   );

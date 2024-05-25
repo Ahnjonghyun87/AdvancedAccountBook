@@ -2,15 +2,19 @@ import CalendarForm from "../../components/CalendarForm";
 import RecentAccount from "../../components/RecentAccount";
 import WriteForm from "../../components/WriteForm";
 
-const Home = ({ selectedMonth, setSelectedMonth }) => {
+const Home = ({ selectedMonth, setSelectedMonth, posts, setPosts }) => {
+  // const filterdPosts = posts.filter(({ date }) => {
+  //   date === selectedMonth;
+  // });
+
   return (
     <main>
-      <WriteForm />
+      <WriteForm setPosts={setPosts} post={posts} />
       <CalendarForm
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      <RecentAccount />
+      <RecentAccount posts={posts} />
     </main>
   );
 };

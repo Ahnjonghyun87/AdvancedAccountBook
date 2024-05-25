@@ -1,39 +1,25 @@
-import { useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
-const WriteForm = () => {
-  const [date, setDate] = useState("");
-  const [item, setItem] = useState("");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [expend, setExpend] = useState([]);
-
-  /*const onChange들이 함수 내부에 있으면 안된다는 소리가 무슨 소린가 했는데
-    이걸로 삽질해서 겨우 다시 기억남 */
-  const onChangeDate = (e) => {
-    setDate(e.target.value);
-  };
-  const onChangeItem = (e) => {
-    setItem(e.target.value);
-  };
-
-  const onChangeAmount = (e) => {
-    setAmount(e.target.value);
-  };
-
-  const onChangeDescription = (e) => {
-    setDescription(e.target.value);
-  };
+const WriteForm = ({ setPosts }) => {
+  const dateRef = useRef("");
+  const itemRef = useRef("");
+  const amountRef = useRef("");
+  const descriptionRef = useRef("");
 
   const onClick = () => {
+    const date = dateRef.current.value;
+    const item = itemRef.current.value;
+    const amount = amountRef.current.value;
+    const description = descriptionRef.current.value;
+
     if (!date.trim() || !description.trim() || !amount.trim() || !item.trim()) {
       alert("빈 칸을 채워주세요");
       return;
     }
-
-    const newExpend = { date, item, amount, description, expend, id: uuid };
-    setExpend([...expend, newExpend]);
+    const newPosts = { date, item, amount, description, id: uuidv4() };
+    setPosts((prev) => [...prev, newPosts]);
   };
 
   return (
@@ -45,8 +31,7 @@ const WriteForm = () => {
             type="date"
             id="date"
             placeholder="YYYY-MM-DD"
-            onChange={onChangeDate}
-            value={date}
+            ref={dateRef}
           />
         </StInputGroup>
         <StInputGroup>
@@ -55,8 +40,7 @@ const WriteForm = () => {
             type="text"
             id="item"
             placeholder="지출 항목"
-            onChange={onChangeItem}
-            value={item}
+            ref={itemRef}
           />
         </StInputGroup>
         <StInputGroup>
@@ -65,8 +49,7 @@ const WriteForm = () => {
             type="number"
             id="amount"
             placeholder="지출 금액"
-            onChange={onChangeAmount}
-            value={amount}
+            ref={amountRef}
           />
         </StInputGroup>
         <StInputGroup>
@@ -75,24 +58,11 @@ const WriteForm = () => {
             type="text"
             id="description"
             placeholder="설명"
-            onChange={onChangeDescription}
-            value={description}
+            ref={descriptionRef}
           />
         </StInputGroup>
         <StButton onClick={onClick}>저장</StButton>
       </StInputBox>
-      <div>
-        <ul className="newExpend">
-          {expend.map(({ date, item, amount, description }, index) => (
-            <li key={index} className="expend">
-              <div>{date}</div>
-              <div>{item}</div>
-              <div>{amount}</div>
-              <div>{description}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
     </StHeaderSection>
   );
 };
@@ -152,13 +122,3 @@ const StButton = styled.button`
 `;
 
 export default WriteForm;
-
-/* <ul className="newExpend">
-      {expend.map(([{date, item, amount, description, id:uuid}]) =>
-    return <li key={index} className="expend">
-    <div>{date}</div>
-    <div>{item}</div>
-    <div>{description}</div>
-    <div>{id}</div>
-    </li>)}
-    </ul> 이건 오류 난 코드*/
