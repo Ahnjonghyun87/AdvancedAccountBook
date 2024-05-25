@@ -34,7 +34,10 @@ const App = () => {
               />
             }
           />
-          <Route path="/detail/:id" element={<Detail />} />
+          <Route
+            path="/detail/:id"
+            element={<Detail posts={posts} setPosts={setPosts} />}
+          />
         </Routes>
       </BrowserRouter>
     </>

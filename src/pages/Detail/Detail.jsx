@@ -1,15 +1,63 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const Detail = () => {
+const Detail = ({ posts, setPosts }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    const post = posts.find((post) => post.id === id);
+    if (post) {
+      setDate(post.date);
+      setItem(post.item);
+      setAmount(post.amount);
+      setDescription(post.description);
+    }
+  }, [id, posts]);
+
+  // 수정 버튼 클릭 이벤트 핸들러
+  const handleUpdate = () => {
+    if (!date.trim() || !description.trim() || !amount.trim() || !item.trim()) {
+      alert("빈 칸을 채워주세요");
+      return;
+    }
+
+    const updatedPost = { date, item, amount, description, id };
+
+    // 기존 posts 배열에서 해당 id의 post를 업데이트합니다.
+    const updatedPosts = posts.map((post) =>
+      post.id === id ? updatedPost : post
+    );
+
+    setPosts(updatedPosts);
+    navigate("/"); // 수정 후 홈으로 이동
+  };
+
+  const handleDelete = () => {
+    const updatedPosts = posts.filter((post) => post.id !== id);
+    setPosts(updatedPosts);
+    navigate("/"); // 삭제 후 홈으로 이동
+  };
+
+  const handleGoBack = () => {
+    navigate("/");
+  };
+
   return (
     <StWrapBox>
       <StSingleBox>
         <StLabel>날짜</StLabel>
         <StInput
-          type="text"
+          type="date"
           id="date"
           placeholder="YYYY-MM-DD"
-          value="yyyy-mm-dd"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
       </StSingleBox>
       <StSingleBox>
@@ -18,7 +66,8 @@ const Detail = () => {
           type="text"
           id="item"
           placeholder="지출 항목"
-          value="category"
+          value={item}
+          onChange={(e) => setItem(e.target.value)}
         />
       </StSingleBox>
       <StSingleBox>
@@ -27,7 +76,8 @@ const Detail = () => {
           type="text"
           id="amount"
           placeholder="지출 금액"
-          value="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
         />
       </StSingleBox>
       <StSingleBox>
@@ -36,17 +86,19 @@ const Detail = () => {
           type="text"
           id="description"
           placeholder="지출 내용"
-          value=""
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </StSingleBox>
       <StSingleBox>
-        <StConfigButton>수정</StConfigButton>
-        <StDeleteButton>삭제</StDeleteButton>
-        <StPreviousButton>뒤로가기</StPreviousButton>
+        <StConfigButton onClick={handleUpdate}>수정</StConfigButton>
+        <StDeleteButton onClick={handleDelete}>삭제</StDeleteButton>
+        <StPreviousButton onClick={handleGoBack}>뒤로가기</StPreviousButton>
       </StSingleBox>
     </StWrapBox>
   );
 };
+
 export default Detail;
 
 const StWrapBox = styled.div`
