@@ -9,7 +9,7 @@ const App = () => {
   const [selectedMonth, setSelectedMonth] = useState(0);
 
   useEffect(() => {
-    //localStorage.setItem("posts", JSON.stringify(posts));
+    localStorage.setItem("posts", JSON.stringify(posts));
   }, [posts]);
 
   return (
