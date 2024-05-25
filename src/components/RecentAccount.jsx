@@ -11,7 +11,7 @@ const RecentAccount = ({ posts }) => {
               <StInnerBox>
                 <StSpanDate>{date}</StSpanDate>
                 <Link to={`/detail/${id}`}>
-                  {/* link to를 "/detail/dinner" 이렇게만 하면 상세페이지에서 기존의 배열이 가진 정보들을 못가져옴.{`라우터경로${id}`} 이렇게 해야함 */}
+                  {/* link to를 "/detail/dinner" 이렇게만 하면 상세페이지에서 기존의 배열이 가진 정보들을 못가져옴.{`라우터경로${id}`} 이렇게 해야함. */}
                   <StSpanText>
                     {item} - {description}
                   </StSpanText>
