@@ -5,7 +5,9 @@ import Detail from "./pages/Detail/Detail";
 import Home from "./pages/Home/Home";
 
 const App = () => {
-  const [posts, setPosts] = useState(localStorage.getItem("posts") || []);
+  const [posts, setPosts] = useState(
+    JSON.parse(localStorage.getItem("posts") || [])
+  );
   const [selectedMonth, setSelectedMonth] = useState(0);
 
   useEffect(() => {
