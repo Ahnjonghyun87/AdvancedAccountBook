@@ -8,11 +8,15 @@ const App = () => {
   const [posts, setPosts] = useState(
     JSON.parse(localStorage.getItem("posts") || [])
   );
-  const [selectedMonth, setSelectedMonth] = useState(0);
-
+  const [selectedMonth, setSelectedMonth] = useState(
+    JSON.parse(localStorage.getItem("selectedMonth") || 1)
+  );
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
   }, [posts]);
+  useEffect(() => {
+    localStorage.setItem("selectedMonth", JSON.stringify(selectedMonth));
+  }, [selectedMonth]);
 
   return (
     <>
