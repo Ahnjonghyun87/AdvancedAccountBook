@@ -6,6 +6,7 @@ import Detail from "./pages/Detail/Detail";
 import Home from "./pages/Home/Home";
 
 const App = () => {
+  // const addPostsReducer = useSelector((state) => state.addPosts); 리듀서 적용 예시
   const [posts, setPosts] = useState(
     JSON.parse(localStorage.getItem("posts") || [])
   );
