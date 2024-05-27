@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { FamilyContext } from "../../Context/FamilyContext";
 
-const Detail = ({ posts, setPosts }) => {
+const Detail = () => {
+  const { posts, setPosts } = useContext(FamilyContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [date, setDate] = useState("");

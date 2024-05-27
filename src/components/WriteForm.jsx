@@ -1,8 +1,11 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { FamilyContext } from "../Context/FamilyContext";
 
-const WriteForm = ({ setPosts }) => {
+const WriteForm = () => {
+  const { setPosts } = useContext(FamilyContext);
+
   const dateRef = useRef("");
   const itemRef = useRef("");
   const amountRef = useRef("");

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { FamilyContext } from "./Context/FamilyContext";
 import GlobalStyles from "./globalStyles";
 import Detail from "./pages/Detail/Detail";
 import Home from "./pages/Home/Home";
@@ -19,28 +20,22 @@ const App = () => {
   }, [selectedMonth]);
 
   return (
-    <>
+    <FamilyContext.Provider
+      value={{
+        posts: posts,
+        setPosts: setPosts,
+        selectedMonth: selectedMonth,
+        setSelectedMonth: setSelectedMonth,
+      }}
+    >
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                posts={posts}
-                setPosts={setPosts}
-                selectedMonth={selectedMonth}
-                setSelectedMonth={setSelectedMonth}
-              />
-            }
-          />
-          <Route
-            path="/detail/:id"
-            element={<Detail posts={posts} setPosts={setPosts} />}
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </FamilyContext.Provider>
   );
 };
 

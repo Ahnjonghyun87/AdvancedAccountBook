@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FamilyContext } from "../Context/FamilyContext";
 
-const RecentAccount = ({ posts }) => {
+const RecentAccount = () => {
+  const { posts } = useContext(FamilyContext);
   return (
     <StFooterSection>
       <StFooterBox>

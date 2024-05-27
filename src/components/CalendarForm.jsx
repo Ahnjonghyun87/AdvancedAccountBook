@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { styled } from "styled-components";
+import { FamilyContext } from "../Context/FamilyContext";
 
-const CalendarForm = ({ setSelectedMonth }) => {
+const CalendarForm = () => {
+  const { setSelectedMonth } = useContext(FamilyContext);
   return (
     <StBodySection>
       <StBodyBox>
