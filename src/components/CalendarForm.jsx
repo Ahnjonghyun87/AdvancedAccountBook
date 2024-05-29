@@ -1,24 +1,33 @@
-import { useContext } from "react";
-import { styled } from "styled-components";
-import { FamilyContext } from "../Context/FamilyContext";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { setSelectedMonth } from "../redux/slices/selectedMonthSlice";
+
+const monthArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const CalendarForm = () => {
-  const { setSelectedMonth } = useContext(FamilyContext);
+  const dispatch = useDispatch();
+  const selectedMonth = useSelector(
+    (state) => state.selectedMonth.selectedMonth
+  );
+
+  const onClickMonth = (month) => {
+    dispatch(setSelectedMonth(month));
+  };
+
   return (
     <StBodySection>
       <StBodyBox>
-        <StBodyButton onClick={() => setSelectedMonth(1)}>1월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(2)}>2월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(3)}>3월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(4)}>4월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(5)}>5월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(6)}>6월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(7)}>7월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(8)}>8월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(9)}>9월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(10)}>10월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(11)}>11월</StBodyButton>
-        <StBodyButton onClick={() => setSelectedMonth(12)}>12월</StBodyButton>
+        {monthArray.map((number) => {
+          return (
+            <StBodyButton
+              key={number}
+              onClick={() => onClickMonth(number)}
+              $active={selectedMonth === number}
+            >
+              {number}월
+            </StBodyButton>
+          );
+        })}
       </StBodyBox>
     </StBodySection>
   );
@@ -43,9 +52,10 @@ const StBodyButton = styled.button`
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  background: #f6f7fa;
-  transition: background-color 1s ease-in-out; /*헤더와 같은 스무스 이펙트*/
+  transition: background-color 0.2s ease-in-out; /*헤더와 같은 스무스 이펙트*/
   white-space: nowrap;
+
+  background-color: ${(props) => (props.$active ? "#2ec4b6" : "#f6f7fa")};
 
   &:hover {
     background-color: #2ec4b6; /* 똑같이 호버 */

@@ -1,10 +1,11 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { FamilyContext } from "../Context/FamilyContext";
+import { addPosts } from "../redux/slices/postsSlice";
 
 const WriteForm = () => {
-  const { setPosts } = useContext(FamilyContext);
+  const dispatch = useDispatch();
 
   const dateRef = useRef("");
   const itemRef = useRef("");
@@ -22,7 +23,12 @@ const WriteForm = () => {
       return;
     }
     const newPosts = { date, item, amount, description, id: uuidv4() };
-    setPosts((prev) => [...prev, newPosts]);
+    dispatch(addPosts(newPosts));
+    // 입력 필드 초기화
+    dateRef.current.value = "";
+    itemRef.current.value = "";
+    amountRef.current.value = "";
+    descriptionRef.current.value = "";
   };
 
   return (

@@ -1,14 +1,20 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FamilyContext } from "../Context/FamilyContext";
 
 const RecentAccount = () => {
-  const { posts } = useContext(FamilyContext);
+  const posts = useSelector(({ posts }) => posts.posts);
+  const selectedMonth = useSelector(
+    (state) => state.selectedMonth.selectedMonth
+  );
+  const filteredPosts = posts.filter(
+    ({ date }) => new Date(date).getMonth() + 1 === selectedMonth
+  );
+
   return (
     <StFooterSection>
       <StFooterBox>
-        {posts.map(({ description, date, item, amount, id }) => {
+        {filteredPosts.map(({ description, date, item, amount, id }) => {
           return (
             <StBox key={id}>
               <StInnerBox>
@@ -55,6 +61,7 @@ const StBox = styled.div`
 
   overflow: hidden;
   transition: all 0.2s linear;
+
   &:hover {
     transform: scale(1.02);
   } /*커서 줌인 호버*/

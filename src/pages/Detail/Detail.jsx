@@ -1,52 +1,49 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { FamilyContext } from "../../Context/FamilyContext";
+import { deletePost, updatePost } from "../../redux/slices/postsSlice";
 
 const Detail = () => {
-  const { posts, setPosts } = useContext(FamilyContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [date, setDate] = useState("");
-  const [item, setItem] = useState("");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.posts);
+  const post = posts.find((post) => post.id === id) || {};
+
+  const dateRef = useRef();
+  const itemRef = useRef();
+  const amountRef = useRef();
+  const descriptionRef = useRef();
 
   useEffect(() => {
-    const post = posts.find((post) => post.id === id);
-    if (post) {
-      setDate(post.date);
-      setItem(post.item);
-      setAmount(post.amount);
-      setDescription(post.description);
+    if (!post.id) {
+      navigate("/");
     }
-  }, [id, posts]);
+  }, [post.id, navigate]);
 
-  // 수정 버튼 클릭 이벤트 핸들러
-  const handleUpdate = () => {
+  const onClickUpdate = () => {
+    const date = dateRef.current.value;
+    const item = itemRef.current.value;
+    const amount = amountRef.current.value;
+    const description = descriptionRef.current.value;
+
     if (!date.trim() || !description.trim() || !amount.trim() || !item.trim()) {
       alert("빈 칸을 채워주세요");
       return;
     }
 
     const updatedPost = { date, item, amount, description, id };
-
-    // 기존 posts 배열에서 해당 id의 post를 업데이트합니다.
-    const updatedPosts = posts.map((post) =>
-      post.id === id ? updatedPost : post
-    );
-
-    setPosts(updatedPosts);
-    navigate("/"); // 수정 후 홈으로 이동
+    dispatch(updatePost(updatedPost));
+    navigate("/");
   };
 
-  const handleDelete = () => {
-    const updatedPosts = posts.filter((post) => post.id !== id);
-    setPosts(updatedPosts);
-    navigate("/"); // 삭제 후 홈으로 이동
+  const onClickDelete = () => {
+    dispatch(deletePost(id));
+    navigate("/");
   };
 
-  const handleGoBack = () => {
+  const onClickGoBack = () => {
     navigate("/");
   };
 
@@ -56,46 +53,42 @@ const Detail = () => {
         <StLabel>날짜</StLabel>
         <StInput
           type="date"
-          id="date"
+          ref={dateRef}
           placeholder="YYYY-MM-DD"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          defaultValue={post.date || ""}
         />
       </StSingleBox>
       <StSingleBox>
         <StLabel>항목</StLabel>
         <StInput
           type="text"
-          id="item"
+          ref={itemRef}
           placeholder="지출 항목"
-          value={item}
-          onChange={(e) => setItem(e.target.value)}
+          defaultValue={post.item || ""}
         />
       </StSingleBox>
       <StSingleBox>
         <StLabel>금액</StLabel>
         <StInput
           type="text"
-          id="amount"
+          ref={amountRef}
           placeholder="지출 금액"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          defaultValue={post.amount || ""}
         />
       </StSingleBox>
       <StSingleBox>
         <StLabel>내용</StLabel>
         <StInput
           type="text"
-          id="description"
+          ref={descriptionRef}
           placeholder="지출 내용"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          defaultValue={post.description || ""}
         />
       </StSingleBox>
       <StSingleBox>
-        <StConfigButton onClick={handleUpdate}>수정</StConfigButton>
-        <StDeleteButton onClick={handleDelete}>삭제</StDeleteButton>
-        <StPreviousButton onClick={handleGoBack}>뒤로가기</StPreviousButton>
+        <StConfigButton onClick={onClickUpdate}>수정</StConfigButton>
+        <StDeleteButton onClick={onClickDelete}>삭제</StDeleteButton>
+        <StPreviousButton onClick={onClickGoBack}>뒤로가기</StPreviousButton>
       </StSingleBox>
     </StWrapBox>
   );
