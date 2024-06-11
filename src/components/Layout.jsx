@@ -5,14 +5,14 @@ const Layout = ({ children }) => {
 
   const handleLogout = () => {
     // 로그아웃 로직 필요
-    navigate("/login");
+    navigate("/");
   };
   return (
     <div>
       <nav>
         <ul>
           <li>
-            <Link to="/">HOME</Link>
+            <Link to="/home">HOME</Link>
           </li>
           <li>
             <Link to="/profile">내 프로필</Link>

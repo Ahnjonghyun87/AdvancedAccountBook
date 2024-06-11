@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SignInPage = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <StSignInPageContainer>
-      <input type="text">로그인 아이디</input>
-      <input type="text">비밀번호</input>
-      <input type="text">닉네임</input>
-      <button>회원가입</button>
-      <button onClick={() => Navigate("/logIn")}>로그인</button>
+      <input type="text" placeholder="로그인아이디" />
+      <input type="text" placeholder="비밀번호" />
+      <input type="text" placeholder="닉네임" />
+      <button onClick={() => navigate("/")}>회원가입</button>
+      <button onClick={() => navigate("/home")}>로그인</button>
     </StSignInPageContainer>
   );
 };
