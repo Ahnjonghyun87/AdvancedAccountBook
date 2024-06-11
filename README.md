@@ -1,1 +1,1 @@
-# AdvancedAccountBook
+기존 가계부에서 회원가입을 통한 인증인가 서비스 도입 및 tanstack-Query를 이용한 지출관리, axios를 통한 api 호출로 리팩토링 하는 작업입니다.
