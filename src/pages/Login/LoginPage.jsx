@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login } from "../../lib/api/auth";
 
-const LoginPage = () => {
+const LoginPage = ({ loginAuth }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [logInID, setLogInId] = useState("");
   const [password, setPassWord] = useState("");
 
@@ -15,6 +17,7 @@ const LoginPage = () => {
     console.log("로그인 api 응답값:", response);
 
     if (response) {
+      dispatch(loginAuth()); // 로그인 성공 시 loginAuth 액션 디스패치
       navigate("/home");
     } else {
       alert("로그인 실패. 다시 시도해주세요.");

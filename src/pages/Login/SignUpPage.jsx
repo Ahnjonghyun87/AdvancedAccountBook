@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { register } from "../../lib/api/auth";
 
-const SignInPage = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
 
   const [logInID, setLogInId] = useState("");
@@ -86,7 +86,7 @@ const SignInPage = () => {
 //온클릭에 onAddUder가 맞는지 onSubmit이 맞는지..//
 // 회원가입이 제대로 됐으면 얼럿과 함께 home.jsx이동로직 필요할듯 //
 
-export default SignInPage;
+export default SignUpPage;
 
 // 아이디는 4~10글자로, 비밀번호는 4~15글자로, 닉네임은 1~10글자로 제한하세요.  --> 해야 함!
 

@@ -4,7 +4,7 @@ import Layout from "./components/Layout";
 import Detail from "./pages/Detail/Detail";
 import Home from "./pages/Home/Home";
 import LoginPage from "./pages/Login/LoginPage";
-import SignInPage from "./pages/Login/SignInPage";
+import SignUpPage from "./pages/Login/SignUpPage";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/detail/:id" element={<Detail />} />
-            <Route path="/signIn" element={<SignInPage />} />
+            <Route path="/signIn" element={<SignUpPage />} />
             <Route path="/" element={<LoginPage />} />
           </Routes>
         </Layout>
