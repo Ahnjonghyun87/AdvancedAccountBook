@@ -5,6 +5,7 @@ const PrivateRoute = ({
   isPublic = false,
   isAuthenticated,
 }) => {
+  console.log("🚀 ~  isAuthenticated: 실행되고 싶어용", isAuthenticated);
   if (isPublic) {
     return isAuthenticated ? <Navigate to="/home" /> : <Component />;
   }
