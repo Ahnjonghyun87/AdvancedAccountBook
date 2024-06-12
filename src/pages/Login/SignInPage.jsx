@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { register } from "../../lib/api/auth";
 
@@ -78,9 +78,7 @@ const SignInPage = () => {
         required
         onChange={(e) => setNickName(e.target.value)}
       />
-      <StLink to="#" onClick={onSubmit}>
-        회원가입
-      </StLink>
+      <StButton>회원가입</StButton>
       <StLink to="/">로그인</StLink>
     </StSignInForm>
   );
@@ -106,7 +104,26 @@ const StSignInForm = styled.form`
   }
 `;
 
-const StLink = styled.button`
+const StLink = styled(Link)`
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(0, 123, 255);
+  font-size: 13px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: block;
+
+  &:hover {
+    background-color: rgb(0, 102, 204);
+  }
+`;
+
+const StButton = styled.button`
   width: 100%;
   padding: 10px;
   background-color: rgb(0, 123, 255);

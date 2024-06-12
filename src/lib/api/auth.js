@@ -16,6 +16,28 @@ export const register = async ({ id, password, nickname }) => {
   }
 };
 
+export const login = async ({ id, password }) => {
+  try {
+    const response = await axios.post(`${AUTH_API_HOST}/login?expires=10m`, {
+      id: id,
+      password: password,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    alert(error?.response?.data?.message);
+  }
+};
+
+// login관련
+
+//    `${AUTH_API_HOST}/login` 여기에 "/login?expires=10m" 이렇게
+//  ?expired=시간 을 붙이면 엑세스 시간을 옵션으로 붙여넣기 가능
+
+// login관련
+
+// register 관련
+
 // 주의 api host 주소뒤에 / 이게 붙어있으면 우리가 await ~~~/register로 붙이면
 // api response에 주소가 //register 이렇게 붙어서 404 error 뜸.
 
@@ -49,3 +71,5 @@ export const register = async ({ id, password, nickname }) => {
 //   console.log(error?.response?.data?.message);
 //   alert(error?.response?.data?.message);
 // }
+
+// register 관련
