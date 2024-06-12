@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { register } from "../../lib/api/auth";
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -8,9 +9,8 @@ const SignInPage = () => {
   const [logInID, setLogInId] = useState("");
   const [password, setPassWord] = useState("");
   const [nickName, setNickName] = useState("");
-  const [newUser, setNewUser] = useState([]);
 
-  const onAddUser = () => {
+  const onAddUser = async () => {
     if (logInID.length < 4 || logInID.length > 10) {
       alert("아이디는 4~10글자여야 합니다.");
       return;
@@ -25,12 +25,20 @@ const SignInPage = () => {
       navigate("/home");
     }
 
-    const newUser = ({ id, password, nickName }) => {
-      setNewUser((prev) => {
-        [...prev, newUser];
-      });
-    };
+    const response = await register({
+      id: logInID,
+      password: password,
+      nickname: nickName,
+    });
+    console.log("api응답값,", response);
   };
+  //   const newUser = ({ id, password, nickName }) => {
+  //     setNewUser((prev) => {
+  //       [...prev, newUser];
+  //     });
+  //   };
+  // };
+  //api호출해야 하는 부분이라함
 
   const onSubmit = (e) => {
     e.preventDefault();

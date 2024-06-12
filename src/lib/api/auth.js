@@ -8,5 +8,7 @@ export const register = async ({ id, password, nickname }) => {
     password: password,
     nickname: nickname,
   });
-  console.log(response);
+  return response;
 };
+
+// 왜 AUTH_API_HOST + "/register" 는 404error생기고 `${AUTH_API_HOST}/register` 이건 잘되는지? //

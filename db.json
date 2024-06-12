@@ -1,8 +1,9 @@
 {
   "accounts": [
     {
-      "id": 123123,
-      "password": 123123
+      "id": "",
+      "password": "",
+      "nickName": ""
     }
   ]
 }
