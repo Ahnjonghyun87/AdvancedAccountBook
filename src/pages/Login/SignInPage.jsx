@@ -20,9 +20,6 @@ const SignInPage = () => {
     } else if (nickName.length < 1 || nickName.length > 10) {
       alert("닉네임은 1~10글자여야 합니다.");
       return;
-    } else {
-      alert("회원가입이 완료되었습니다!");
-      navigate("/home");
     }
 
     const response = await register({
@@ -30,15 +27,25 @@ const SignInPage = () => {
       password: password,
       nickname: nickName,
     });
-    console.log("api응답값,", response);
+    console.log("회원가입 api 응답 :", response);
+    if (response) {
+      confirm("회원가입이 완료 되었습니다!");
+      navigate("/");
+    }
   };
+
+  // if (response) {
+  //   alert("회원가입이 완료되었습니다!");
+  //   navigate("/");
+  // }
+  //if문은 조건이 완료시에 로그인 화면으로 돌아가 사용자가 로그인 하게끔.
+
   //   const newUser = ({ id, password, nickName }) => {
   //     setNewUser((prev) => {
   //       [...prev, newUser];
   //     });
   //   };
-  // };
-  //api호출해야 하는 부분이라함
+  // }; ==> 이렇게 todo에서 썻던 방식은 필요없고 api에서 가져오는 방식 필요
 
   const onSubmit = (e) => {
     e.preventDefault();
