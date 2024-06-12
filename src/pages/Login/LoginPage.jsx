@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login } from "../../lib/api/auth";
+import { loginAuth } from "../../redux/slices/authSlice";
 
-const LoginPage = ({ loginAuth }) => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logInID, setLogInId] = useState("");
