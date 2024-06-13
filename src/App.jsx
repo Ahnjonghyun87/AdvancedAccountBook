@@ -42,7 +42,7 @@ const App = () => {
               path="/home"
               element={
                 <PrivateRoute>
-                  <Home setPosts={setPosts} />
+                  <Home setPosts={setPosts} user={user} />
                 </PrivateRoute>
               }
             />

@@ -3,16 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getPosts } from "../lib/api/post";
+import { getExpenses } from "../lib/api/expenses";
 
 const RecentAccount = () => {
   const {
-    data: posts = [],
+    data: expense = [],
     isLoading,
     error,
-  } = useQuery({ queryKey: ["posts"], queryFn: getPosts });
+  } = useQuery({ queryKey: ["expense"], queryFn: getExpenses });
   console.log("isLoading", isLoading);
-  console.log("posts", posts);
+  console.log("expense", expense);
   if (isLoading) {
     return <div>로딩중..</div>;
   }
@@ -28,7 +28,7 @@ const RecentAccount = () => {
   const selectedMonth = useSelector(
     (state) => state.selectedMonth.selectedMonth
   );
-  const filteredPosts = posts.filter(
+  const filteredPosts = expense.filter(
     ({ date }) => new Date(date).getMonth() + 1 === selectedMonth
   );
 
@@ -37,10 +37,10 @@ const RecentAccount = () => {
       <StFooterBox>
         {filteredPosts.map(({ description, date, item, amount, id }) => {
           return (
-            <StBox key={posts.id}>
+            <StBox key={expense.id}>
               <StInnerBox>
                 <StSpanDate>{date}</StSpanDate>
-                <Link to={`/detail/${posts.id}`}>
+                <Link to={`/detail/${expense.id}`}>
                   {/* link to를 "/detail/dinner" 이렇게만 하면 상세페이지에서 기존의 배열이 가진 정보들을 못가져옴.{`라우터경로${id}`} 이렇게 해야함. */}
                   <StSpanText>
                     {item} - {description}
