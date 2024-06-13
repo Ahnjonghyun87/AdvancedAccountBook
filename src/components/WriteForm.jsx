@@ -1,16 +1,16 @@
+import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { addPosts } from "../redux/slices/postsSlice";
+import { postExpense } from "../lib/api/expenses";
 
-const WriteForm = () => {
-  const dispatch = useDispatch();
-
+const WriteForm = ({ user }) => {
   const dateRef = useRef("");
   const itemRef = useRef("");
   const amountRef = useRef("");
   const descriptionRef = useRef("");
+
+  const mutation = useMutation({ mutationFn: postExpense });
 
   const onClick = () => {
     const date = dateRef.current.value;
@@ -22,15 +22,24 @@ const WriteForm = () => {
       alert("빈 칸을 채워주세요");
       return;
     }
-    const newPosts = { date, item, amount, description, id: uuidv4() };
-    dispatch(addPosts(newPosts));
+
+    const newExpense = {
+      date,
+      item,
+      amount,
+      description,
+      id: uuidv4(),
+      createdBy: user.userId,
+    };
+
+    mutation.mutate(newExpense);
+
     // 입력 필드 초기화
     dateRef.current.value = "";
     itemRef.current.value = "";
     amountRef.current.value = "";
     descriptionRef.current.value = "";
   };
-
   return (
     <StHeaderSection>
       <StInputBox>
@@ -75,6 +84,8 @@ const WriteForm = () => {
     </StHeaderSection>
   );
 };
+
+export default WriteForm;
 
 /* 헤더 style components*/
 const StHeaderSection = styled.section`
@@ -129,5 +140,3 @@ const StButton = styled.button`
     background-color: #0056b3; /* 다크블루 색상 */
   }
 `;
-
-export default WriteForm;

@@ -14,7 +14,7 @@ import PrivateRoute from "./shared/PrivateRoute";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [posts, setPosts] = React.useState([]);
+  const [expense, setExpense] = React.useState([]);
   const [user, setUser] = React.useState(null);
 
   // getUserInfo를 사용하는 로직 추가
@@ -42,7 +42,7 @@ const App = () => {
               path="/home"
               element={
                 <PrivateRoute>
-                  <Home setPosts={setPosts} user={user} />
+                  <Home setExpense={setExpense} user={user} expense={expense} />
                 </PrivateRoute>
               }
             />
@@ -50,7 +50,7 @@ const App = () => {
               path="/detail/:id"
               element={
                 <PrivateRoute>
-                  <Detail setPosts={setPosts} posts={posts} />
+                  <Detail setExpense={setExpense} expense={expense} />
                 </PrivateRoute>
               }
             />
