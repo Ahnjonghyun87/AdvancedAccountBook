@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Layout from "./components/Layout";
@@ -10,11 +11,14 @@ import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/Login/SignUpPage";
 import PrivateRoute from "./shared/PrivateRoute";
 
-const App = () => {
-  const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState(null);
+const queryClient = new QueryClient();
 
-  useEffect(() => {
+const App = () => {
+  const [posts, setPosts] = React.useState([]);
+  const [user, setUser] = React.useState(null);
+
+  // getUserInfo를 사용하는 로직 추가
+  React.useEffect(() => {
     getUserInfo().then((response) => {
       if (response) {
         setUser({
@@ -29,7 +33,7 @@ const App = () => {
   console.log("로그인된 유저 정보:", user);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <GlobalStyles />
       <BrowserRouter>
         <Layout user={user} setUser={setUser}>
@@ -58,12 +62,12 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="/signUp" element={<SignUpPage />} />
+            <Route path="/signIn" element={<SignUpPage />} />
             <Route path="/" element={<LoginPage setUser={setUser} />} />
           </Routes>
         </Layout>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 };
 
