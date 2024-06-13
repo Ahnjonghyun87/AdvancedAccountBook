@@ -39,7 +39,7 @@ const LoginPage = () => {
         onChange={(e) => setPassWord(e.target.value)}
       />
       <button onClick={handleLogIn}>로그인</button>
-      <button onClick={() => navigate("/signIn")}>회원가입</button>
+      <button onClick={() => navigate("/signUp")}>회원가입</button>
     </StLoginForm>
   );
 };

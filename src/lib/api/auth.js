@@ -46,6 +46,19 @@ export const getUserInfo = async () => {
   }
 };
 
+export const updateProfile = async (formData) => {
+  const accessTokens = localStorage.getItem("accessToken");
+  if (accessTokens) {
+    const response = await axios.patch(`${AUTH_API_HOST}/profile`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessTokens}`,
+      },
+    });
+    return response.data;
+  }
+};
+
 // user관련
 // getUserInfo 함수는 로컬스토리지에 있는 엑세스토큰에 먼저 접근 시도.
 // 엑세스 토큰이 있다면 회원정보 api를 호출하고 응답값 받음

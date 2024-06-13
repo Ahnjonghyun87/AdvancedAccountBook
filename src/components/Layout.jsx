@@ -13,6 +13,7 @@ const Layout = ({ children, user, setUser }) => {
   // 디버깅용 콘솔 로그
   console.log("Current Pathname:", location.pathname);
 
+  // showNav 변수를 경로 패턴을 확인하는 함수로 설정
   const showNav = () => {
     const publicPaths = ["/home", "/profile"];
     if (publicPaths.includes(location.pathname)) {
@@ -25,7 +26,7 @@ const Layout = ({ children, user, setUser }) => {
     return false;
   };
 
-  //로그인 안되어 있으면 public area로 보냄
+  // 로그인 안되어 있으면 public area로 보냄
   useEffect(() => {
     getUserInfo().then((response) => {
       if (response) {
@@ -40,16 +41,16 @@ const Layout = ({ children, user, setUser }) => {
         localStorage.clear();
       }
     });
-  }, []);
+  }, [navigate, setUser]);
 
   const handleLogout = () => {
     dispatch(logout());
-
     navigate("/");
   };
+
   return (
     <>
-      {showNav && (
+      {showNav() && (
         <StNav>
           <StUl>
             <StLink to="/home">HOME</StLink>
