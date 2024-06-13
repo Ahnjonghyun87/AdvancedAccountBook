@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -11,23 +10,19 @@ const RecentAccount = () => {
     isLoading,
     error,
   } = useQuery({ queryKey: ["expense"], queryFn: getExpenses });
-  console.log("isLoading", isLoading);
-  console.log("expense", expense);
-  if (isLoading) {
-    return <div>로딩중..</div>;
-  }
-
-  // const posts = useSelector(() => posts.posts);
-  // const selectedMonth = useSelector(
-  //   (state) => state.selectedMonth.selectedMonth
-  // );
-  // const filteredPosts = posts.filter(
-  //   ({ date }) => new Date(date).getMonth() + 1 === selectedMonth
-  // );
 
   const selectedMonth = useSelector(
     (state) => state.selectedMonth.selectedMonth
   );
+
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
+
+  if (error) {
+    return <div>에러 발생: {error.message}</div>;
+  }
+
   const filteredPosts = expense.filter(
     ({ date }) => new Date(date).getMonth() + 1 === selectedMonth
   );
@@ -37,11 +32,10 @@ const RecentAccount = () => {
       <StFooterBox>
         {filteredPosts.map(({ description, date, item, amount, id }) => {
           return (
-            <StBox key={expense.id}>
+            <StBox key={id}>
               <StInnerBox>
                 <StSpanDate>{date}</StSpanDate>
-                <Link to={`/detail/${expense.id}`}>
-                  {/* link to를 "/detail/dinner" 이렇게만 하면 상세페이지에서 기존의 배열이 가진 정보들을 못가져옴.{`라우터경로${id}`} 이렇게 해야함. */}
+                <Link to={`/detail/${id}`}>
                   <StSpanText>
                     {item} - {description}
                   </StSpanText>
@@ -55,6 +49,8 @@ const RecentAccount = () => {
     </StFooterSection>
   );
 };
+
+export default RecentAccount;
 
 /* 푸터 styled components */
 
@@ -110,5 +106,3 @@ const StSpanDate = styled.span`
   color: rgb(102, 102, 102);
   font-size: 14px;
 `;
-
-export default RecentAccount;
