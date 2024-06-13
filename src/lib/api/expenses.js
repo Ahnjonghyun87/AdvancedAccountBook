@@ -47,6 +47,17 @@ export const putExpense = async (updatedExpense) => {
     );
     return data;
   } catch (error) {
-    alert("뭔가 잘못됨.");
+    alert("뭔가 잘못됨. 수정불가");
+  }
+};
+
+//아래는 삭제
+
+export const deleteExpense = async (id) => {
+  try {
+    const { data } = await axios.delete(`${JASON_SERVER_HOST}/expenses/${id}`);
+    return data;
+  } catch (error) {
+    alert("뭔가 잘못됨. 삭제불가");
   }
 };

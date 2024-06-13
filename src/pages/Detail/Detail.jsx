@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getExpense, putExpense } from "../../lib/api/expenses";
+import { deleteExpense, getExpense, putExpense } from "../../lib/api/expenses";
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -36,6 +36,14 @@ export default function Detail() {
     },
   });
 
+  const mutationDelete = useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      navigate("/home");
+      queryClient.invalidateQueries(["expenses"]);
+    },
+  });
+
   const editExpense = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     if (!datePattern.test(date)) {
@@ -59,10 +67,8 @@ export default function Detail() {
     navigate("/home");
   };
 
-  const deleteExpense = () => {
-    const newExpenses = expenses.filter((expense) => expense.id !== id);
-    setExpenses(newExpenses);
-    navigate("/home");
+  const handleDelete = () => {
+    mutationDelete.mutate(id);
   };
 
   return (
@@ -109,7 +115,7 @@ export default function Detail() {
       </InputGroup>
       <ButtonGroup>
         <Button onClick={editExpense}>수정</Button>
-        <Button danger="true" onClick={deleteExpense}>
+        <Button danger="true" onClick={handleDelete}>
           삭제
         </Button>
         <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
