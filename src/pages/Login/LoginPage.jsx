@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     if (response) {
       dispatch(loginAuth(response.accessToken)); // 로그인 성공 시 엑세스 토큰을 저장
-
+      alert("로그인 성공");
       navigate("/home");
     } else {
       alert("로그인 실패. 다시 시도해주세요.");
@@ -43,8 +43,6 @@ const LoginPage = () => {
     </StLoginForm>
   );
 };
-
-//인풋에 비밀번호를 쓸 때 *로 보이게 하기
 
 export default LoginPage;
 

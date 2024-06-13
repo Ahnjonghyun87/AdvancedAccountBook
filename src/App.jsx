@@ -31,7 +31,7 @@ const App = () => {
     <>
       <GlobalStyles />
       <BrowserRouter>
-        <Layout>
+        <Layout user={user} setUser={setUser}>
           <Routes>
             <Route
               path="/home"

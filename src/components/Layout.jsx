@@ -1,12 +1,31 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getUserInfo } from "../lib/api/auth";
 import { logout } from "../redux/slices/authSlice";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user, setUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+
+  //로그인 안되어 있으면 public area로 보냄
+  useEffect(() => {
+    getUserInfo().then((response) => {
+      if (response) {
+        setUser({
+          userId: response.id,
+          nickname: response.nickname,
+          avatar: response.avatar,
+        });
+      } else {
+        setUser(null);
+        navigate("/");
+        localStorage.clear();
+      }
+    });
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -17,11 +36,20 @@ const Layout = ({ children }) => {
     <>
       {location.pathname === "/home" ? (
         <StNav>
-          <StLink to="/home">HOME</StLink>
           <StUl>
-            <li>
-              <Link to="/profile">내 프로필</Link>
-            </li>
+            <StLink to="/home">HOME</StLink>
+            <Link to="/profile">내 프로필</Link>
+          </StUl>
+
+          <StUl>
+            <StUserProfile>
+              {user && (
+                <>
+                  <StUserAvatar src={user.avatar} alt="User Avatar" />
+                  <StUserName>{user.nickname}</StUserName>
+                </>
+              )}
+            </StUserProfile>
             <li>
               <button onClick={handleLogout}>로그아웃</button>
             </li>
@@ -75,4 +103,21 @@ const StUl = styled.ul`
     color: #ffffff;
     padding: 8px 12px;
   }
+`;
+
+const StUserProfile = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StUserAvatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const StUserName = styled.span`
+  color: white;
+  margin-right: 20px;
 `;
