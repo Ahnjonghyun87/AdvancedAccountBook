@@ -11,14 +11,6 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1;
   }
 
-  #root {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 32px;
-    text-align: center;
-    box-sizing: initial;
-  }
-
   * {
     box-sizing: border-box;
   }

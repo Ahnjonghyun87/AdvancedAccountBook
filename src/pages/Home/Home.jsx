@@ -13,3 +13,7 @@ const Home = () => {
 };
 
 export default Home;
+
+// const StMainContainer = styled.div`
+//   padding-top: 50px;
+// `;
