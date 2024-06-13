@@ -22,3 +22,16 @@ export const postExpense = async (newExpense) => {
     alert("무언가 잘못됨. 데이터가 써지지 않습니다.");
   }
 };
+
+//아래가 디테일 페이지관련
+
+export const getExpense = async ({ queryKey }) => {
+  try {
+    const response = await axios.get(
+      `${JASON_SERVER_HOST}/expenses/${queryKey[1]}`
+    );
+    return response.data;
+  } catch (error) {
+    alert("뭔가 잘못됨.");
+  }
+};

@@ -1,179 +1,172 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { deletePost, updatePost } from "../../redux/slices/postsSlice";
+import { getExpense } from "../../lib/api/expenses";
 
-const Detail = () => {
-  const { id } = useParams();
+export default function Detail() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.posts);
-  const post = posts.find((post) => post.id === id) || {};
+  const { id } = useParams();
 
-  const dateRef = useRef();
-  const itemRef = useRef();
-  const amountRef = useRef();
-  const descriptionRef = useRef();
+  const {
+    data: selectedExpense,
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["expense", id], queryFn: getExpense });
+
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
-    if (!post.id) {
-      navigate("/");
+    if (selectedExpense) {
+      setDate(selectedExpense.date);
+      setItem(selectedExpense.item);
+      setAmount(selectedExpense.amount);
+      setDescription(selectedExpense.description);
     }
-  }, [post.id, navigate]);
+  }),
+    [selectedExpense];
 
-  const onClickUpdate = () => {
-    const date = dateRef.current.value;
-    const item = itemRef.current.value;
-    const amount = amountRef.current.value;
-    const description = descriptionRef.current.value;
-
-    if (!date.trim() || !description.trim() || !amount.trim() || !item.trim()) {
-      alert("빈 칸을 채워주세요");
+  const editExpense = () => {
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!datePattern.test(date)) {
+      alert("날짜를 YYYY-MM-DD 형식으로 입력해주세요.");
+      return;
+    }
+    if (!item || amount <= 0) {
+      alert("유효한 항목과 금액을 입력해주세요.");
       return;
     }
 
-    const updatedPost = { date, item, amount, description, id };
-    dispatch(updatePost(updatedPost));
+    const newExpenses = expenses.map((expense) => {
+      if (expense.id !== id) {
+        return expense;
+      } else {
+        return {
+          ...expense,
+          date: date,
+          item: item,
+          amount: amount,
+          description: description,
+        };
+      }
+    });
+    setExpenses(newExpenses);
     navigate("/");
   };
 
-  const onClickDelete = () => {
-    dispatch(deletePost(id));
-    navigate("/");
-  };
-
-  const onClickGoBack = () => {
+  const deleteExpense = () => {
+    const newExpenses = expenses.filter((expense) => expense.id !== id);
+    setExpenses(newExpenses);
     navigate("/");
   };
 
   return (
-    <StWrapBox>
-      <StSingleBox>
-        <StLabel>날짜</StLabel>
-        <StInput
-          type="date"
-          ref={dateRef}
+    <Container>
+      <InputGroup>
+        <label htmlFor="date">날짜</label>
+        <input
+          type="text"
+          id="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
           placeholder="YYYY-MM-DD"
-          defaultValue={post.date || ""}
         />
-      </StSingleBox>
-      <StSingleBox>
-        <StLabel>항목</StLabel>
-        <StInput
+      </InputGroup>
+      <InputGroup>
+        <label htmlFor="item">항목</label>
+        <input
           type="text"
-          ref={itemRef}
+          id="item"
+          value={item}
+          onChange={(e) => setItem(e.target.value)}
           placeholder="지출 항목"
-          defaultValue={post.item || ""}
         />
-      </StSingleBox>
-      <StSingleBox>
-        <StLabel>금액</StLabel>
-        <StInput
-          type="text"
-          ref={amountRef}
+      </InputGroup>
+      <InputGroup>
+        <label htmlFor="amount">금액</label>
+        <input
+          type="number"
+          id="amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
           placeholder="지출 금액"
-          defaultValue={post.amount || ""}
         />
-      </StSingleBox>
-      <StSingleBox>
-        <StLabel>내용</StLabel>
-        <StInput
+      </InputGroup>
+      <InputGroup>
+        <label htmlFor="description">내용</label>
+        <input
           type="text"
-          ref={descriptionRef}
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           placeholder="지출 내용"
-          defaultValue={post.description || ""}
         />
-      </StSingleBox>
-      <StSingleBox>
-        <StConfigButton onClick={onClickUpdate}>수정</StConfigButton>
-        <StDeleteButton onClick={onClickDelete}>삭제</StDeleteButton>
-        <StPreviousButton onClick={onClickGoBack}>뒤로가기</StPreviousButton>
-      </StSingleBox>
-    </StWrapBox>
+      </InputGroup>
+      <ButtonGroup>
+        <Button onClick={editExpense}>수정</Button>
+        <Button danger="true" onClick={deleteExpense}>
+          삭제
+        </Button>
+        <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
+      </ButtonGroup>
+    </Container>
   );
-};
+}
 
-export default Detail;
-
-const StWrapBox = styled.div`
+const Container = styled.div`
   max-width: 800px;
-  margin: 0px auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 16px;
-  text-align: left;
 `;
 
-const StLabel = styled.label`
-  font-size: 14px;
-  color: #333333;
-  margin-bottom: 5px;
-`;
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 
-const StInput = styled.input`
-  padding: 8px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  font-size: 14px;
-  width: 100%;
-`;
+  label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+  }
 
-const StConfigButton = styled.button`
-  padding: 8px 10px;
-  height: 34px;
-  width: 75px;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 20px;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #0056b3; /* 다크블루 색상 */
+  input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
   }
 `;
 
-const StDeleteButton = styled.button`
-  padding: 8px 10px;
-  height: 34px;
-  width: 75px;
-  background-color: #ff0000;
-  color: #ffffff;
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: ${(props) => (props.danger ? "#ff4d4d" : "#007bff")};
+  color: white;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
   cursor: pointer;
-  margin-right: 20px;
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #8b0000; /* 다크레드 색상 */
+    background-color: ${(props) => (props.danger ? "#cc0000" : "#0056b3")};
   }
 `;
 
-const StPreviousButton = styled.button`
-  padding: 8px 10px;
-  height: 34px;
-  width: 100px;
-  background-color: gray;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 20px;
-  transition: background-color 0.2s ease-in-out;
+const BackButton = styled(Button)`
+  background-color: #6c757d;
 
   &:hover {
-    background-color: darkslategrey; /* 다크그레이 색상 */
+    background-color: #5a6268;
   }
-`;
-
-const StSingleBox = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
