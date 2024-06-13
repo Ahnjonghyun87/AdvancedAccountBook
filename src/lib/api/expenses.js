@@ -35,3 +35,18 @@ export const getExpense = async ({ queryKey }) => {
     alert("뭔가 잘못됨.");
   }
 };
+
+//아래가 수정
+
+export const putExpense = async (updatedExpense) => {
+  const { id, ...rest } = updatedExpense;
+  try {
+    const { data } = await axios.put(
+      `${JASON_SERVER_HOST}/expenses/${id}`,
+      rest
+    );
+    return data;
+  } catch (error) {
+    alert("뭔가 잘못됨.");
+  }
+};

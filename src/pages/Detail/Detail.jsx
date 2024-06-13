@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getExpense } from "../../lib/api/expenses";
+import { getExpense, putExpense } from "../../lib/api/expenses";
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -26,8 +26,15 @@ export default function Detail() {
       setAmount(selectedExpense.amount);
       setDescription(selectedExpense.description);
     }
-  }),
-    [selectedExpense];
+  }, [selectedExpense]);
+
+  const mutationEdit = useMutation({
+    mutationFn: putExpense,
+    onSuccess: () => {
+      navigate("/home");
+      queryClient.invalidateQueries(["expenses"]);
+    },
+  });
 
   const editExpense = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -40,27 +47,22 @@ export default function Detail() {
       return;
     }
 
-    const newExpenses = expenses.map((expense) => {
-      if (expense.id !== id) {
-        return expense;
-      } else {
-        return {
-          ...expense,
-          date: date,
-          item: item,
-          amount: amount,
-          description: description,
-        };
-      }
-    });
-    setExpenses(newExpenses);
-    navigate("/");
+    const newExpense = {
+      id: id,
+      date: date,
+      item: item,
+      amount: parseInt(amount, 10),
+      description: description,
+    };
+
+    mutationEdit.mutate(newExpense);
+    navigate("/home");
   };
 
   const deleteExpense = () => {
     const newExpenses = expenses.filter((expense) => expense.id !== id);
     setExpenses(newExpenses);
-    navigate("/");
+    navigate("/home");
   };
 
   return (

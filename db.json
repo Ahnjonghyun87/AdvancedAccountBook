@@ -78,25 +78,25 @@
       "description": "1111"
     },
     {
-      "id": "cc331b2d-be87-499e-9794-7f1f1e6f3506",
-      "date": "2024-06-14",
+      "date": "cc331b2d-be87-499e-9794-7f1f1e6f3506",
       "item": "1312",
-      "amount": "123213",
-      "description": "121"
+      "amount": 123213,
+      "description": "121",
+      "id": "cc331b2d-be87-499e-9794-7f1f1e6f3506"
     },
     {
-      "id": "cadbd85b-7ccd-4436-aa41-450aa65eefec",
       "date": "2024-06-14",
       "item": "1312",
-      "amount": "123213",
-      "description": "121"
+      "amount": 123213,
+      "description": "zzzzzzzzzzzzzzzzzzzz",
+      "id": "cadbd85b-7ccd-4436-aa41-450aa65eefec"
     },
     {
-      "id": "bef20070-f308-4b1e-8763-8dba776390e7",
       "date": "2024-06-14",
       "item": "1312",
-      "amount": "123213",
-      "description": "121"
+      "amount": 123213,
+      "description": "zzzzzzzzzzzzzz",
+      "id": "bef20070-f308-4b1e-8763-8dba776390e7"
     },
     {
       "id": "477e180b-44fa-46b3-8d8f-0312b9495fd9",
@@ -141,11 +141,11 @@
       "description": "테스트"
     },
     {
-      "id": "558e5636-5c56-4dc1-aa82-a95b7299d0a2",
       "date": "2024-06-14",
       "item": "버버버법",
-      "amount": "123123",
-      "description": "ㅇㅇㅇ"
+      "amount": 123123,
+      "description": "ㅇㅇㅇ",
+      "id": "558e5636-5c56-4dc1-aa82-a95b7299d0a2"
     },
     {
       "id": "4c95ced6-c774-491c-828d-f37e035356b7",
