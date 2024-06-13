@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Layout from "./components/Layout";
+import Profile from "./components/Profile";
 import { getUserInfo } from "./lib/api/auth";
 import Detail from "./pages/Detail/Detail";
 import Home from "./pages/Home/Home";
@@ -46,6 +47,14 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <Detail setPosts={setPosts} />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile setUser={setUser} user={user} />
                 </PrivateRoute>
               }
             />
