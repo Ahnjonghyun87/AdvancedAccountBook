@@ -1,9 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { getPosts } from "../lib/api/post";
 
 const RecentAccount = () => {
-  const posts = useSelector(({ posts }) => posts.posts);
+  const {
+    data: posts = [],
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["posts"], queryFn: getPosts });
+  console.log("isLoading", isLoading);
+  console.log("posts", posts);
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
+
+  // const posts = useSelector(() => posts.posts);
+  // const selectedMonth = useSelector(
+  //   (state) => state.selectedMonth.selectedMonth
+  // );
+  // const filteredPosts = posts.filter(
+  //   ({ date }) => new Date(date).getMonth() + 1 === selectedMonth
+  // );
+
   const selectedMonth = useSelector(
     (state) => state.selectedMonth.selectedMonth
   );
@@ -16,10 +37,10 @@ const RecentAccount = () => {
       <StFooterBox>
         {filteredPosts.map(({ description, date, item, amount, id }) => {
           return (
-            <StBox key={id}>
+            <StBox key={posts.id}>
               <StInnerBox>
                 <StSpanDate>{date}</StSpanDate>
-                <Link to={`/detail/${id}`}>
+                <Link to={`/detail/${posts.id}`}>
                   {/* link to를 "/detail/dinner" 이렇게만 하면 상세페이지에서 기존의 배열이 가진 정보들을 못가져옴.{`라우터경로${id}`} 이렇게 해야함. */}
                   <StSpanText>
                     {item} - {description}

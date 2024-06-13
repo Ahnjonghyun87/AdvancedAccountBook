@@ -50,7 +50,7 @@ const App = () => {
               path="/detail/:id"
               element={
                 <PrivateRoute>
-                  <Detail setPosts={setPosts} />
+                  <Detail setPosts={setPosts} posts={posts} />
                 </PrivateRoute>
               }
             />
