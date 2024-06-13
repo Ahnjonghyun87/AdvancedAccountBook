@@ -10,6 +10,21 @@ const Layout = ({ children, user, setUser }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  // 디버깅용 콘솔 로그
+  console.log("Current Pathname:", location.pathname);
+
+  const showNav = () => {
+    const publicPaths = ["/home", "/profile"];
+    if (publicPaths.includes(location.pathname)) {
+      return true;
+    }
+    // 디테일 페이지 경로 패턴을 확인
+    if (location.pathname.startsWith("/detail/")) {
+      return true;
+    }
+    return false;
+  };
+
   //로그인 안되어 있으면 public area로 보냄
   useEffect(() => {
     getUserInfo().then((response) => {
@@ -34,7 +49,7 @@ const Layout = ({ children, user, setUser }) => {
   };
   return (
     <>
-      {location.pathname === "/home" ? (
+      {showNav && (
         <StNav>
           <StUl>
             <StLink to="/home">HOME</StLink>
@@ -55,7 +70,7 @@ const Layout = ({ children, user, setUser }) => {
             </li>
           </StUl>
         </StNav>
-      ) : null}
+      )}
       <StMain>{children}</StMain>
     </>
   );
