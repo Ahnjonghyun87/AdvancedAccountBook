@@ -4,11 +4,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { isAuthenticated: false },
   reducers: {
-    loginAuth(state) {
+    loginAuth(state, action) {
       state.isAuthenticated = true;
+      localStorage.setItem("accessToken", action.payload); // 엑세스 토큰 저장
     },
     logout(state) {
       state.isAuthenticated = false;
+      localStorage.removeItem("accessToken"); // 엑세스 토큰 삭제
     },
   },
 });

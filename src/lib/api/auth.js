@@ -29,6 +29,27 @@ export const login = async ({ id, password }) => {
   }
 };
 
+export const getUserInfo = async () => {
+  const accessTokens = localStorage.getItem("accessToken");
+  if (accessTokens) {
+    try {
+      const response = await axios.get(`${AUTH_API_HOST}/user`, {
+        headers: {
+          Authorization: `Bearer ${accessTokens}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      alert(error?.response?.data?.message);
+    }
+  }
+};
+
+// user관련
+// getUserInfo 함수는 로컬스토리지에 있는 엑세스토큰에 먼저 접근 시도.
+// 엑세스 토큰이 있다면 회원정보 api를 호출하고 응답값 받음
+
 // login관련
 
 //    `${AUTH_API_HOST}/login` 여기에 "/login?expires=10m" 이렇게

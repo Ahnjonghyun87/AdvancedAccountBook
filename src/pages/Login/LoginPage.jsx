@@ -18,7 +18,8 @@ const LoginPage = () => {
     console.log("로그인 api 응답값:", response);
 
     if (response) {
-      dispatch(loginAuth()); // 로그인 성공 시 loginAuth 액션 디스패치
+      dispatch(loginAuth(response.accessToken)); // 로그인 성공 시 엑세스 토큰을 저장
+
       navigate("/home");
     } else {
       alert("로그인 실패. 다시 시도해주세요.");

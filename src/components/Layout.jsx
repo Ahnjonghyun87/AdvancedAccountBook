@@ -1,11 +1,16 @@
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/authSlice";
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // 로그아웃 로직 필요
+    dispatch(logout());
+
     navigate("/");
   };
   return (
