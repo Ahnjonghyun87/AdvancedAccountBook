@@ -42,7 +42,7 @@ const App = () => {
               path="/home"
               element={
                 <PrivateRoute>
-                  <Home setExpense={setExpense} user={user} expense={expense} />
+                  <Home user={user} />
                 </PrivateRoute>
               }
             />

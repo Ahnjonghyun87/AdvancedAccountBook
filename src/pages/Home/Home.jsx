@@ -2,10 +2,10 @@ import CalendarForm from "../../components/CalendarForm";
 import RecentAccount from "../../components/RecentAccount";
 import WriteForm from "../../components/WriteForm";
 
-const Home = (user, expense, setExpense) => {
+const Home = (user) => {
   return (
     <main>
-      <WriteForm user={user} setExpense={setExpense} expense={expense} />
+      <WriteForm user={user} />
       <CalendarForm />
       <RecentAccount />
     </main>

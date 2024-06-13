@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { postExpense } from "../lib/api/expenses";
@@ -9,8 +10,16 @@ const WriteForm = ({ user }) => {
   const itemRef = useRef("");
   const amountRef = useRef("");
   const descriptionRef = useRef("");
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const mutation = useMutation({ mutationFn: postExpense });
+  const mutation = useMutation({
+    mutationFn: postExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+      navigate("/home");
+    },
+  });
 
   const onClick = () => {
     const date = dateRef.current.value;
@@ -40,6 +49,7 @@ const WriteForm = ({ user }) => {
     amountRef.current.value = "";
     descriptionRef.current.value = "";
   };
+
   return (
     <StHeaderSection>
       <StInputBox>
@@ -86,7 +96,6 @@ const WriteForm = ({ user }) => {
 };
 
 export default WriteForm;
-
 /* 헤더 style components*/
 const StHeaderSection = styled.section`
   background-color: #ffffff;
