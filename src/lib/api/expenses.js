@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const JASON_SERVER_HOST = "http://localhost:4000";
+const JASON_SERVER_HOST = "https://wakeful-snowy-ghost.glitch.me/";
 
 export const getExpenses = async () => {
   try {
