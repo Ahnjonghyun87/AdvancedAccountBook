@@ -61,7 +61,7 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="/signIn" element={<SignUpPage />} />
+            <Route path="/signUp" element={<SignUpPage />} />
             <Route path="/" element={<LoginPage setUser={setUser} />} />
           </Routes>
         </Layout>

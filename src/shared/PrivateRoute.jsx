@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
 const PrivateRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
   if (!isAuthenticated) {
-    return <Navigate to="/" />;
+    dispatch(logout());
   }
 
   return children;

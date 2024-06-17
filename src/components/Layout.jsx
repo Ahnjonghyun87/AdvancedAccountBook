@@ -37,11 +37,16 @@ const Layout = ({ children, user, setUser }) => {
         });
       } else {
         setUser(null);
-        navigate("/");
+
         localStorage.clear();
       }
     });
   }, [navigate, setUser]);
+  // 버그 픽스-> 기존의 else {
+  //   setUser(null);
+  //   navigate("/");
+  //   localStorage.clear();
+  // } 조건문은 로그아웃 로직이 2개 겹쳐서 메인 로그인 페이지에서 회원가입을 눌러도 계속 로그인 페이지만 가는 것 수정
 
   const handleLogout = () => {
     dispatch(logout());

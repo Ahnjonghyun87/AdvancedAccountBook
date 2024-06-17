@@ -7,7 +7,7 @@ import { getExpenses } from "../lib/api/expenses";
 const RecentAccount = () => {
   const {
     data: expense = [],
-    isLoading,
+    isPending,
     error,
   } = useQuery({ queryKey: ["expense"], queryFn: getExpenses });
 
@@ -15,7 +15,7 @@ const RecentAccount = () => {
     (state) => state.selectedMonth.selectedMonth
   );
 
-  if (isLoading) {
+  if (isPending) {
     return <div>로딩중..</div>;
   }
 

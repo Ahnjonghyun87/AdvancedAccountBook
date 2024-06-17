@@ -10,7 +10,7 @@ export default function Detail() {
 
   const {
     data: selectedExpense,
-    isLoading,
+    isPending,
     error,
   } = useQuery({ queryKey: ["expense", id], queryFn: getExpense });
 
